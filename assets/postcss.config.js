@@ -5,13 +5,14 @@ const purgecss = require("@fullhuman/postcss-purgecss")({
     "../**/views/**/*.ex",
     "./js/**/*.js"
   ],
-  defaultExtractractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
-})
+  defaultExtractor: content => content.match(/[\w-/:]+(?<!:)/g) || []
+});
+
 module.exports = {
   plugins: [
     require("postcss-import"),
     require("tailwindcss"),
     require("autoprefixer"),
-    purgecss
+    ...(process.env.NODE_ENV === "production" ? purgecss : [])
   ]
 }
